@@ -30,22 +30,13 @@ SIM = {
 # ----------------------------
 # Leader profile (simple braking window)
 # ----------------------------
-# LEADER = {
-#     "t_brake_start": 50.0,  # s
-#     "t_brake_end": 60.0,    # s
-#     "a_brake": -1.5,        # m/s^2 during braking window
-#     "a_cruise": 0.0,        # m/s^2 outside braking window
-#     "v_min": 0.0,           # m/s
-#     "v_max": None,          # m/s, set e.g. 50.0 to clamp; None = no clamp
-# }
-
 LEADER = {
-    "t_brake_start": 20.0,
-    "t_brake_end": 23.0,
-    "a_brake": -3.0,
-    "a_cruise": 0.0,
-    "v_min": 0.0,
-    "v_max": None,
+    "t_brake_start": 50.0,  # s
+    "t_brake_end": 60.0,    # s
+    "a_brake": -1.5,        # m/s^2 during braking window
+    "a_cruise": 0.0,        # m/s^2 outside braking window
+    "v_min": 0.0,           # m/s
+    "v_max": None,          # m/s, set e.g. 50.0 to clamp; None = no clamp
 }
 
 # ----------------------------
@@ -80,7 +71,7 @@ LEADER = {
 }
 
 ----------------------------
-Teste B — “Mild brake”
+Test B — “Mild brake”
 ----------------------------
 LEADER = {
     "t_brake_start": 20.0,
@@ -92,7 +83,7 @@ LEADER = {
 }
 
 ----------------------------
-Teste C — “Hard brake”
+Test C — “Hard brake”
 ----------------------------
 LEADER = {
     "t_brake_start": 20.0,
@@ -102,39 +93,5 @@ LEADER = {
     "v_min": 0.0,
     "v_max": None,
 }
-
-
-----------------------------
-Teste D — “Colision”
-----------------------------
-IDM = {
-    "v0": 33.33,
-    "T": 1.8,
-    "s0": 2.0,
-    "a_max": 0.6,      # << very low acceleration
-    "b": 1.0,
-    "delta": 4,
-    "L": 5.0,
-}
-
-SIM = {
-    "N": 10,
-    "dt": 0.05,
-    "T_sim": 40.0,
-    "s_init": 2.0,     # << very small initial gap
-    "v_init": 30.0,
-}
-
-LEADER = {
-    "t_brake_start": 10.0,
-    "t_brake_end": 12.0,
-    "a_brake": -8.0,   # << very hard brake
-    "a_cruise": 0.0,
-    "v_min": 0.0,
-    "v_max": None,
-}
-
-
-
 
 '''

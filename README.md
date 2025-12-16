@@ -1,99 +1,92 @@
-# IDM Platoon Simulation
+# Intelligent Driver Model (IDM) — Modélisation
 
-A small, single-lane Intelligent Driver Model (IDM) platoon simulator.
+This repository was developed in the context of the **Modélisation** course and focuses on the
+study, implementation, and analysis of **car-following models**, with emphasis on the
+**Intelligent Driver Model (IDM)**.
 
-This repository contains a compact Python implementation of the IDM used to simulate a leader vehicle performing a simple braking manoeuvre and a string of follower vehicles reacting according to the IDM law. The entire project consists of two files:
+The objective is to understand how microscopic driving strategies translate into
+macroscopic traffic phenomena, such as stability, congestion, and traffic capacity.
 
-- `idm.py` — simulator and plotting utilities.
-- `config.py` — editable scenario and model parameters.
+<p align="center">
+  <img src="extra/background-traffic.webp" width="750">
+</p>
 
-## Requirements
+---
 
-- Python 3.8+ (should work on 3.7 in many environments)
-- numpy
-- matplotlib
+## Intelligent Driver Model
 
-Install dependencies with pip:
+The Intelligent Driver Model (IDM) describes the longitudinal dynamics of a vehicle
+based on its own velocity, the distance to the preceding vehicle, and the relative speed.
 
-```bash
-pip install numpy matplotlib
-```
+<p align="center">
+  <img src="extra/formula.png" width="650">
+</p>
 
-## Quick start
+---
 
-Run the simulation and show the default plots:
+## Model Parameters
 
-```bash
-python idm.py
-```
+Where:
 
-This runs the simulation using parameters in `config.py` and opens matplotlib figures showing speeds and (optionally) positions over time.
+- \( v \) is the velocity of the vehicle;
+- \( s \) is the bumper-to-bumper distance to the next vehicle;
+- \( \Delta v \) is the velocity difference (approaching rate);
+- \( v_0 \) is the desired velocity in free traffic;
+- \( s_0 \) is the minimum gap at standstill;
+- \( T \) is the desired time headway;
+- \( a \) is the maximum acceleration;
+- \( b \) is the comfortable braking deceleration.
 
-## Configuration (`config.py`)
+---
 
-Open `config.py` to change experiment settings without editing the simulator code.
+## Illustrative Scenarios
 
-- `IDM` (dict): model parameters for vehicles
-	- `v0`: desired speed (m/s)
-	- `T`: desired time headway (s)
-	- `s0`: minimum gap (m)
-	- `a_max`: maximum acceleration (m/s^2)
-	- `b`: comfortable deceleration (m/s^2)
-	- `delta`: acceleration exponent
-	- `L`: vehicle length (m)
+The following figures illustrate typical car-following situations and the influence
+of relative distance and velocity on the vehicle dynamics.
 
-- `SIM` (dict): simulation settings
-	- `N`: number of vehicles (vehicle 0 is the leader)
-	- `dt`: timestep (s)
-	- `T_sim`: total simulation time (s)
-	- `s_init`: initial gap between vehicles (m)
-	- `v_init`: initial speed for all vehicles (m/s)
+### Example 1 — Stable Following
 
-- `LEADER` (dict): leader acceleration profile
-	- `t_brake_start`, `t_brake_end`: braking time window (s)
-	- `a_brake`: acceleration during braking (negative for braking)
-	- `a_cruise`: acceleration outside braking window
-	- `v_min`, `v_max`: optional speed clamps for leader
+<p align="center">
+  <img src="extra/Figure_1-exemple02.png" width="600">
+</p>
 
-- `PLOT` (dict): plotting options
-	- `show_positions`: whether to plot positions in addition to speeds
-	- `show_legend`: show a legend on plots
+This configuration corresponds to a stable regime where the desired gap is respected
+and the leader's acceleration is constant.
 
-The file contains a few commented example scenarios (mild brake, hard brake, collision test) you can uncomment or adapt.
+### Example 2 — Breaking
 
-## How it works (brief)
+<p align="center">
+  <img src="extra/Figure_1-exemple01.png" width="600">
+</p>
 
-- `leader_acc(t_sec)` — returns the leader's acceleration at time `t_sec` according to the `LEADER` profile.
-- `idm_acc(gap, v_i, dv)` — computes the IDM acceleration for a follower given the net gap (m), its speed `v_i` (m/s), and relative speed `dv = v_i - v_front`.
-- `run_simulation()` — runs an explicit Euler integration of the leader and followers and returns `(time, x, v)` arrays.
-- `plot_results(time, x, v)` — plots speeds and (optionally) positions versus time using matplotlib.
+In this case, it shows the behavior of the vehicle platoon after the leader brakes.
 
-The simulator prints a collision message and stops early if a follower overlaps its leader (gap < 0).
+---
 
-## Examples
+## Implementation
 
-- Run the default scenario:
+The numerical implementation of the IDM is provided in Python:
 
-```bash
-python idm.py
-```
+- `idm.py`: IDM acceleration function and parameters
+- `comp.py`: simulation and comparison utilities
+- `MATLAB/`: optional reference implementations
 
-- To test a hard braking event, edit `LEADER['a_brake']` in `config.py` to a larger magnitude (e.g. `-3.0`) or change the braking window timings.
+---
 
-- To produce a collision test, reduce `SIM['s_init']` and/or `IDM['a_max']` as shown in the commented scenarios in `config.py`.
+## References
 
-## Troubleshooting
+- **Lecture 09 — Car-Following Models Based on Driving Strategies**,  
+  Technische Universität Dresden.
 
-- If matplotlib windows do not appear, make sure your Python environment supports GUI backends (on headless servers use an alternative backend or save figures using `plt.savefig`).
-- If the simulation prints a `[COLLISION]` message, adjust initial gaps or IDM parameters to increase safety headways.
+- Kesting, A., Treiber, M., Helbing, D.  
+  *Enhanced intelligent driver model to assess the impact of driving strategies on traffic capacity*.  
+  Institute for Transport and Economics, TU Dresden; ETH Zurich.  
+  Downloaded from: https://royalsocietypublishing.org/ (19 November 2025)
 
-## Extending the project
+---
 
-- Add data export (CSV) for time series.
-- Implement more realistic leader trajectories or external disturbances.
-- Replace Euler integration with a higher-order integrator for improved numerical accuracy.
+## Context
 
-## License
-
-This project is provided as-is for educational and experimental use. Feel free to adapt it for your work.
-
+This repository is part of the coursework for **Modélisation** and is intended for
+educational and analytical purposes, linking theoretical models, numerical simulation,
+and interpretation of traffic dynamics.
