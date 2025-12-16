@@ -28,14 +28,15 @@ based on its own velocity, the distance to the preceding vehicle, and the relati
 
 Where:
 
-- \( v \) is the velocity of the vehicle;
-- \( s \) is the bumper-to-bumper distance to the next vehicle;
-- \( \Delta v \) is the velocity difference (approaching rate);
-- \( v_0 \) is the desired velocity in free traffic;
-- \( s_0 \) is the minimum gap at standstill;
-- \( T \) is the desired time headway;
-- \( a \) is the maximum acceleration;
-- \( b \) is the comfortable braking deceleration.
+- $v$ is the velocity of the vehicle;
+- $s$ is the bumper-to-bumper distance to the next vehicle;
+- $\Delta v$ is the velocity difference (approaching rate);
+- $v_0$ is the desired velocity in free traffic;
+- $s_0$ is the minimum gap at standstill;
+- $T$ is the desired time headway;
+- $a$ is the maximum acceleration;
+- $b$ is the comfortable braking deceleration.
+
 
 ---
 
