@@ -38,3 +38,21 @@ codegen/
 # SimBiology backup files
 *.sbproj.backup
 *.sbproj.bak
+
+# Python / project
+# Virtual environment directories (common names)
+venv/
+.venv/
+env/
+ENV/
+# Virtualenv wrapper
+venv-*/
+
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# Editor directories
+.vscode/
+.idea/
+
