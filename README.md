@@ -27,11 +27,11 @@ of the traffic state.
 #### Acceleration Law
 
 $$
-a_{\mathrm{IDM}}(s, v, \Delta v)
-= \frac{dv}{dt}
-= a \left[
-1 - \left( \frac{v}{v_0} \right)^{\delta}
-- \left( \frac{s^*(v, \Delta v)}{s} \right)^2
+a_{\mathrm{IDM}}(s,v,\Delta v)
+=
+a\left[
+1-\left(\frac{v}{v_0}\right)^{\delta}
+-\left(\frac{s^*(v,\Delta v)}{s}\right)^2
 \right]
 $$
 
@@ -39,7 +39,8 @@ $$
 
 $$
 s^*(v,\Delta v)
-= s_0 + vT + \frac{v\,\Delta v}{2\sqrt{ab}}
+=
+s_0+vT+\frac{v\,\Delta v}{2\sqrt{ab}}
 $$
 
 #### Interpretation
@@ -49,7 +50,7 @@ $$
 - The desired gap $s^*$ combines:
   - minimum standstill distance $s_0$,
   - time-headway control $vT$,
-  - dynamic braking based on the relative speed $\Delta v = v - v_l$.
+  - dynamic braking based on the relative speed $\Delta v=v-v_l$.
 
 The IDM is **collision-free** but may produce **overly strong braking** in cut-in situations.
 
@@ -63,14 +64,13 @@ accelerations of both vehicles over a short horizon.
 #### CAH Acceleration
 
 $$
-a_{\mathrm{CAH}}(s, v, v_l, a_l)
+a_{\mathrm{CAH}}(s,v,v_l,a_l)
 =
 \begin{cases}
-\dfrac{v^2 \tilde{a}_l}{v_l^2 - 2 s \tilde{a}_l},
-& \text{if } v_l (v - v_l) \le -2 s \tilde{a}_l,
+\dfrac{v^2\tilde a_l}{v_l^2-2s\tilde a_l},
+& \text{if } v_l(v-v_l)\le -2s\tilde a_l,
 \\[1.2em]
-\tilde{a}_l
-- \dfrac{(v - v_l)^2 \Theta(v - v_l)}{2s},
+\tilde a_l-\dfrac{(v-v_l)^2\Theta(v-v_l)}{2s},
 & \text{otherwise.}
 \end{cases}
 $$
@@ -78,7 +78,7 @@ $$
 where
 
 $$
-\tilde{a}_l = \min(a_l, a)
+\tilde a_l=\min(a_l,a)
 $$
 
 #### Interpretation
@@ -98,17 +98,16 @@ realistic yet safe driving behavior.
 #### ACC Acceleration Law
 
 $$
-a_{\mathrm{ACC}} =
+a_{\mathrm{ACC}}
+=
 \begin{cases}
 a_{\mathrm{IDM}},
-& \text{if } a_{\mathrm{IDM}} \ge a_{\mathrm{CAH}},
+& \text{if } a_{\mathrm{IDM}}\ge a_{\mathrm{CAH}},
 \\[0.8em]
-(1 - c)\, a_{\mathrm{IDM}}
-+ c \left[
+(1-c)a_{\mathrm{IDM}}
++c\left[
 a_{\mathrm{CAH}}
-+ b \tanh\!\left(
-\dfrac{a_{\mathrm{IDM}} - a_{\mathrm{CAH}}}{b}
-\right)
++b\tanh\!\left(\dfrac{a_{\mathrm{IDM}}-a_{\mathrm{CAH}}}{b}\right)
 \right],
 & \text{otherwise.}
 \end{cases}
@@ -121,9 +120,9 @@ $$
 - In strongly critical situations, the response remains conservative.
 - The hyperbolic tangent ensures **smoothness and differentiability**.
 
-The parameter $c \in [0,1]$ is the **coolness factor**:
-- $c = 0$: pure IDM,
-- $c \approx 1$: highly relaxed ACC behavior.
+The parameter $c\in[0,1]$ is the **coolness factor**:
+- $c=0$: pure IDM,
+- $c\approx1$: highly relaxed ACC behavior.
 
 ---
 
@@ -133,7 +132,7 @@ The parameter $c \in [0,1]$ is the **coolness factor**:
 |------|--------|
 | $v$ | Vehicle velocity |
 | $v_l$ | Leader velocity |
-| $\Delta v = v - v_l$ | Approaching rate |
+| $\Delta v=v-v_l$ | Approaching rate |
 | $s$ | Net gap (bumper-to-bumper distance) |
 | $v_0$ | Desired speed |
 | $T$ | Desired time headway |
@@ -146,7 +145,7 @@ The parameter $c \in [0,1]$ is the **coolness factor**:
 
 ---
 
-**Key idea:**  
+**Key idea**  
 The Enhanced IDM preserves the theoretical safety and stability of the IDM while
 eliminating unrealistic braking reactions in lane-change and cut-in scenarios.
 
@@ -154,38 +153,43 @@ eliminating unrealistic braking reactions in lane-change and cut-in scenarios.
 
 ## Illustrative Scenario
 
-The following figure illustrate typical car-following situation and the influence
+The following figure illustrates a typical car-following situation and the influence
 of relative distance and velocity on the vehicle dynamics.
 
-### Example 1 — Braking
+### Example — Braking
 
 <p align="center">
   <img src="extra/Figure_1-enhenced-IDM-break.png" width="600">
 </p>
 
-This case shows the behavior of the vehicle platoon after
+This case shows the behavior of a vehicle platoon after the leader brakes.
 
-# Implementation
+---
+
+## Implementation
 
 Python implementations included in this workspace:
 
 - **idm.py** — baseline IDM model and a simple simulator  
 - **enhenced_idm.py** — Python port of the enhanced IDM / ACC (CAH + blending)  
 - **config.py** — configuration for the baseline IDM  
-- **config_enhenced_idm.py** — configuration for the enhanced‑IDM experiments  
-- **Enhenced IDM – MATLAB/** — original MATLAB reference implementations (CAH, blending, IDM acceleration)
+- **config_enhenced_idm.py** — configuration for the enhanced-IDM experiments  
+- **Enhenced IDM – MATLAB/** — original MATLAB reference implementations
 
 ---
 
-# References
+## References
 
 - **Lecture 09 — Car-Following Models Based on Driving Strategies**, Technische Universität Dresden.  
-- Kesting, A., Treiber, M., Helbing, D. *Enhanced intelligent driver model to assess the impact of driving strategies on traffic capacity*.  
+- Kesting, A., Treiber, M., Helbing, D.  
+  *Enhanced intelligent driver model to assess the impact of driving strategies on traffic capacity*.  
   Institute for Transport and Economics, TU Dresden; ETH Zurich.  
   Downloaded from: https://royalsocietypublishing.org/ (19 November 2025)
 
 ---
 
-# Context
+## Context
 
-This repository is part of the coursework for **Modélisation** and is intended for educational and analytical purposes, linking theoretical models, numerical simulation, and interpretation of traffic dynamics.
+This repository is part of the coursework for **Modélisation** and is intended for
+educational and analytical purposes, linking theoretical models, numerical simulation,
+and interpretation of traffic dynamics.
