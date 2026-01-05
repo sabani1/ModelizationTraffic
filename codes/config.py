@@ -22,8 +22,8 @@ IDM = {
 SIM = {
     "N": 10,         # number of vehicles (vehicle 0 is the leader)
     "dt": 0.1,       # time step (s)
-    "T_sim": 120.0,  # total simulation time (s)
-    "s_init": 25.0,  # initial gap between vehicles (m), excluding vehicle length
+    "T_sim": 200.0,  # total simulation time (s)
+    "s_init": 80.0,  # initial gap between vehicles (m), excluding vehicle length
     "v_init": 30.0,  # initial speed for all vehicles (m/s)
 }
 
@@ -31,8 +31,8 @@ SIM = {
 # Leader profile (simple braking window)
 # ----------------------------
 LEADER = {
-    "t_brake_start": 50.0,  # s
-    "t_brake_end": 60.0,    # s
+    "t_brake_start": 20.0,  # s
+    "t_brake_end": 22.0,    # s
     "a_brake": -1.5,        # m/s^2 during braking window
     "a_cruise": 0.0,        # m/s^2 outside braking window
     "v_min": 0.0,           # m/s

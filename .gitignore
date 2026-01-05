@@ -38,3 +38,8 @@ codegen/
 # SimBiology backup files
 *.sbproj.backup
 *.sbproj.bak
+
+# Python caches
+__pycache__/
+*.py[cod]
+

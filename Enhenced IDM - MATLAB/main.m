@@ -1,72 +1,73 @@
-clear; clc;
+clear; clc; close all;
 
-Tmax = 60;          % total simulation time
-dt   = 0.05;        % integration step
+%% Simulation parameters
+Tmax = 60;
+dt   = 0.05;
+time = 0:dt:Tmax;
 
-N = 10;             % vehicles in platoon
-L = 5*ones(N,1);    % vehicle lengths
+N = 10;
+L = 5*ones(N,1);
 
-%% parameters 
-par.v0 = 33.33;     % desired speed [m/s]
-par.T  = 1.5;       % time gap
-par.s0 = 2;         % minimum gap
-par.a  = 1.4;       % max accel
-par.b  = 2.0;       % comfortable decel
-par.d  = 4;         % IDM exponent
-par.c  = 0.99;      % coolness factor for ACC blending
+%% Model parameters
+par.v0 = 33.33;
+par.T  = 1.5;
+par.s0 = 2;
+par.a  = 1.4;
+par.b  = 2.0;
+par.d  = 4;
+par.c  = 0.99;
 
-% 0 = IDM, 1 = ACC
+% ACC usage
 useACC = zeros(N,1);
-useACC(2:10) = 1;   % make followers ACC for demonstration
+useACC(2:N) = 1;
 
-%% Initial conditions
-V0 = 25;            % initial speed of the entire platoon
+%% Initial conditions (equilibrium)
+V0 = 25;
 x0 = zeros(2*N,1);
 
-% initial positions so that s_i = equilibrium spacing at V0
 S_eq = compute_equilibrium_spacing(V0,par);
 
 x_lead = 0;
 for i = 1:N
-    x0(2*i-1) = x_lead - (i-1)*(S_eq + L(i));
+    x0(2*i-1) = x_lead - (i-1)*(S_eq + L(max(i-1,1)));
     x0(2*i)   = V0;
 end
 
-%% Time integration
-time = 0:dt:Tmax;
+%% Storage
 X = zeros(length(time),2*N);
 X(1,:) = x0';
 
+%% Time integration
 for k = 1:length(time)-1
     t = time(k);
 
-    % leader speed profile
+    % leader velocity (prescribed)
     v_lead = leader_velocity(t);
 
-    % integrate one step with rk4 method
-    X(k+1,:) = rk4_step(@(x) dynamics(x,N,L,par,useACC,v_lead), X(k,:), dt);
+    % integrate one RK4 step
+    X(k+1,:) = rk4_step( ...
+        @(x) dynamics(x,t,N,L,par,useACC,v_lead), ...
+        X(k,:), dt);
 end
 
-%% Plotting
-positions = X(:,1:2:end);
+%% Extract states
+positions  = X(:,1:2:end);
 velocities = X(:,2:2:end);
 
-figure; hold on;
-for i=1:N
-    plot(time, positions(:,i));
-end
-title('Vehicle Trajectories (Space-Time)');
-xlabel('Time [s]'); ylabel('Position [m]');
-
+%% Plots
 figure; hold on;
 for i=1:N
     plot(time, velocities(:,i));
 end
-title('Velocities'); xlabel('Time [s]'); ylabel('v_i [m/s]');
+xlabel('Time [s]'); ylabel('Velocity [m/s]');
+title('IDM with CAH - Velocities');
 
-figure; hold on;
-for i=2:N
-    s_i = positions(:,i-1) - positions(:,i) - L(i-1);
-    plot(time, s_i);
+
+figure; hold on; 
+for i = 1:N
+    plot(time, positions(:,i), 'DisplayName', ['Vehicle ', num2str(i)]);
 end
-title('Gaps s_i(t)'); xlabel('Time [s]'); ylabel('Gap [m]');
+xlabel('Time [s]');
+ylabel('Position [m]');
+title('IDM with CAH - Positions of Vehicles');
+legend show;
