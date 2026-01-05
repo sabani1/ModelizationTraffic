@@ -24,24 +24,11 @@ as proposed by **Kesting, Treiber & Helbing (2010)**.
 The **IDM** defines the longitudinal acceleration of a vehicle as a continuous function
 of the traffic state.
 
-#### Acceleration Law
+#### Acceleration Law & Desired Dynamic Gap
 
-$$
-a_{\mathrm{IDM}}(s,v,\Delta v)
-=
-a\left[
-1-\left(\frac{v}{v_0}\right)^{\delta}
--\left(\frac{s^*(v,\Delta v)}{s}\right)^2
-\right]
-$$
-
-#### Desired Dynamic Gap
-
-$$
-s^*(v,\Delta v)
-=
-s_0+vT+\frac{v\,\Delta v}{2\sqrt{ab}}
-$$
+<p align="center">
+  <img src="extra/aidm.png" width="550">
+</p>
 
 #### Interpretation
 
@@ -63,17 +50,9 @@ accelerations of both vehicles over a short horizon.
 
 #### CAH Acceleration
 
-$$
-a_{\mathrm{CAH}}(s,v,v_l,a_l)
-=
-\begin{cases}
-\dfrac{v^2\tilde a_l}{v_l^2-2s\tilde a_l},
-& \text{if } v_l(v-v_l)\le -2s\tilde a_l,
-\\[1.2em]
-\tilde a_l-\dfrac{(v-v_l)^2\Theta(v-v_l)}{2s},
-& \text{otherwise.}
-\end{cases}
-$$
+<p align="center">
+  <img src="extra/acah.png" width="550">
+</p>
 
 where
 
@@ -97,21 +76,9 @@ realistic yet safe driving behavior.
 
 #### ACC Acceleration Law
 
-$$
-a_{\mathrm{ACC}}
-=
-\begin{cases}
-a_{\mathrm{IDM}},
-& \text{if } a_{\mathrm{IDM}}\ge a_{\mathrm{CAH}},
-\\[0.8em]
-(1-c)a_{\mathrm{IDM}}
-+c\left[
-a_{\mathrm{CAH}}
-+b\tanh\!\left(\dfrac{a_{\mathrm{IDM}}-a_{\mathrm{CAH}}}{b}\right)
-\right],
-& \text{otherwise.}
-\end{cases}
-$$
+<p align="center">
+  <img src="extra/aacc.png" width="550">
+</p>
 
 #### Interpretation
 
