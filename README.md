@@ -141,8 +141,6 @@ Python implementations included in this workspace:
 - **enhenced_idm.py** — Python port of the enhanced IDM / ACC (CAH + blending)  
 - **config.py** — configuration for the baseline IDM  
 - **config_enhenced_idm.py** — configuration for the enhanced-IDM experiments  
-- **Enhenced IDM – MATLAB/** — original MATLAB reference implementations
-
 
 ## Running simulations
 
