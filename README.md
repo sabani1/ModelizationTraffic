@@ -143,7 +143,23 @@ Python implementations included in this workspace:
 - **config_enhenced_idm.py** — configuration for the enhanced-IDM experiments  
 - **Enhenced IDM – MATLAB/** — original MATLAB reference implementations
 
----
+
+## Running simulations
+
+
+Run the baseline IDM:
+
+```bash
+python codes/idm.py
+```
+
+Run the enhanced IDM:
+
+```bash
+python codes/enhenced_idm.py
+```
+
+To change parameters, edit the corresponding config files: `codes/config.py` or `codes/config_enhenced_idm.py`.
 
 ## References
 
